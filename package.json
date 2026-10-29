@@ -3,10 +3,14 @@
 	"version": "1.0.0",
 	"type": "module",
 	"scripts": {
-		"main": "node src/main.ts",
-		"format": "prettier . --write"
+		"main": "node src/bin/main.ts",
+		"register": "node src/bin/register.ts",
+		"format": "prettier . --write",
+		"format:check": "prettier . --check"
 	},
 	"devDependencies": {
+		"@ianvs/prettier-plugin-sort-imports": "^4.7.1",
+		"@tsconfig/node-ts": "^23.6.4",
 		"@tsconfig/node26": "^26.0.1",
 		"@types/node": "^26.6.6",
 		"prettier": "^3.9.10"
