@@ -9,7 +9,7 @@ import type { Cog } from "../cog.ts";
 
 const name = "reaction-roles";
 
-const reactionRoleMessageId = "1565492712612958400";
+const reactionRoleMessageIds = ["1565492712612958400"];
 
 const reactionEmojiToRole: Record<string, string> = {
 	"🧑‍🏫": "1565102990094901268" /* @SwAT Mentor */,
@@ -20,7 +20,7 @@ async function onMessageReactionAdd(
 	user: User | PartialUser,
 ) {
 	if (reaction.partial) await reaction.fetch();
-	if (reaction.message.id !== reactionRoleMessageId) return;
+	if (!reactionRoleMessageIds.includes(reaction.message.id)) return;
 	if (!reaction.emoji.name) return;
 
 	const roleId = reactionEmojiToRole[reaction.emoji.name];
@@ -40,7 +40,7 @@ async function onMessageReactionRemove(
 	user: User | PartialUser,
 ) {
 	if (reaction.partial) await reaction.fetch();
-	if (reaction.message.id !== reactionRoleMessageId) return;
+	if (!reactionRoleMessageIds.includes(reaction.message.id)) return;
 	if (!reaction.emoji.name) return;
 
 	const roleId = reactionEmojiToRole[reaction.emoji.name];
