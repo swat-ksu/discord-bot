@@ -1,0 +1,17 @@
+{
+	"name": "swat-discord-bot",
+	"version": "1.0.0",
+	"type": "module",
+	"scripts": {
+		"main": "node src/main.ts",
+		"format": "prettier . --write"
+	},
+	"devDependencies": {
+		"@tsconfig/node26": "^26.0.1",
+		"@types/node": "^26.6.6",
+		"prettier": "^3.9.10"
+	},
+	"dependencies": {
+		"discord.js": "^14.27.0"
+	}
+}
