@@ -1,10 +1,17 @@
-import { Client, Events, GatewayIntentBits } from "discord.js";
+import { Client, Events, GatewayIntentBits, Partials } from "discord.js";
 import { cogs, type Command } from "../cog.ts";
 import { getEnv } from "../env.ts";
 
 const env = getEnv();
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+const client = new Client({
+	intents: [
+		GatewayIntentBits.Guilds,
+		GatewayIntentBits.GuildMessages,
+		GatewayIntentBits.GuildMessageReactions,
+	],
+	partials: [Partials.Message, Partials.Channel, Partials.Reaction],
+});
 
 for (const cog of cogs) {
 	for (const [event, listener] of Object.entries(cog.events)) {

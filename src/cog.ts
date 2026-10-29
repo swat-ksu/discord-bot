@@ -4,6 +4,7 @@ import type {
 	SlashCommandBuilder,
 } from "discord.js";
 import ping from "./cogs/ping.ts";
+import reactionRoles from "./cogs/reaction-roles.ts";
 
 export interface Cog {
 	name: string;
@@ -18,4 +19,4 @@ export type Command = {
 	execute: (interaction: ChatInputCommandInteraction) => Promise<void>;
 };
 
-export const cogs: Cog[] = [ping];
+export const cogs: Cog[] = [ping, reactionRoles];

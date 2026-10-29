@@ -3,6 +3,7 @@ import { cogs } from "../cog.ts";
 import { getEnv } from "../env.ts";
 
 const env = getEnv();
+
 const rest = new REST().setToken(env.DISCORD_TOKEN);
 
 try {
