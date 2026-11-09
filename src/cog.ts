@@ -1,4 +1,8 @@
-import type { ChatInputCommandInteraction, ClientEvents } from "discord.js";
+import type {
+	ChatInputCommandInteraction,
+	ClientEvents,
+	RESTPostAPIChatInputApplicationCommandsJSONBody,
+} from "discord.js";
 import { SlashCommandBuilder } from "discord.js";
 import type { Env } from "./env.ts";
 
@@ -7,7 +11,7 @@ export type Context = {
 };
 
 export type Cog<Commands extends string> = {
-	commands: Record<Commands, SlashCommandBuilder>;
+	commands: Record<Commands, SlashCommand>;
 	setup: (ctx: Context) => {
 		commands: {
 			[K in Commands]: (
@@ -22,4 +26,8 @@ export type Cog<Commands extends string> = {
 
 export function Cog<const Commands extends string>(cog: Cog<Commands>) {
 	return cog;
+}
+
+interface SlashCommand {
+	toJSON(): RESTPostAPIChatInputApplicationCommandsJSONBody;
 }
