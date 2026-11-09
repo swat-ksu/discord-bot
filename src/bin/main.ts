@@ -1,8 +1,12 @@
+import "dotenv/config";
 import { Client, Events, GatewayIntentBits, Partials } from "discord.js";
-import { cogs, type Command } from "../cog.ts";
+import { type Context } from "../cog.ts";
+import { cogs } from "../cogs.ts";
 import { getEnv } from "../env.ts";
 
 const env = getEnv();
+
+const ctx: Context = { env };
 
 const client = new Client({
 	intents: [
@@ -13,16 +17,16 @@ const client = new Client({
 	partials: [Partials.Message, Partials.Channel, Partials.Reaction],
 });
 
-for (const cog of cogs) {
+const setupCogs = cogs.map((cog) => cog.setup(ctx));
+
+for (const cog of setupCogs) {
 	for (const [event, listener] of Object.entries(cog.events)) {
 		client.on(event, listener);
 	}
 }
 
-const commands: Map<Command["data"]["name"], Command["execute"]> = new Map(
-	cogs.flatMap((cog) =>
-		cog.commands.map((command) => [command.data.name, command.execute]),
-	),
+const commands = new Map(
+	setupCogs.flatMap((cog) => Object.entries(cog.commands)),
 );
 
 client.on(Events.ClientReady, (readyClient) => {

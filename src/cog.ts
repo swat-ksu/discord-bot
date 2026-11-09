@@ -1,22 +1,25 @@
-import type {
-	ChatInputCommandInteraction,
-	ClientEvents,
-	SlashCommandBuilder,
-} from "discord.js";
-import ping from "./cogs/ping.ts";
-import reactionRoles from "./cogs/reaction-roles.ts";
+import type { ChatInputCommandInteraction, ClientEvents } from "discord.js";
+import { SlashCommandBuilder } from "discord.js";
+import type { Env } from "./env.ts";
 
-export interface Cog {
-	name: string;
-	commands: Command[];
-	events: {
-		[Event in keyof ClientEvents]?: (...args: ClientEvents[Event]) => void;
-	};
-}
-
-export type Command = {
-	data: SlashCommandBuilder;
-	execute: (interaction: ChatInputCommandInteraction) => Promise<void>;
+export type Context = {
+	env: Env;
 };
 
-export const cogs: Cog[] = [ping, reactionRoles];
+export type Cog<Commands extends string> = {
+	commands: Record<Commands, SlashCommandBuilder>;
+	setup: (ctx: Context) => {
+		commands: {
+			[K in Commands]: (
+				interaction: ChatInputCommandInteraction,
+			) => Promise<void>;
+		};
+		events: {
+			[K in keyof ClientEvents]?: (...args: ClientEvents[K]) => Promise<void>;
+		};
+	};
+};
+
+export function Cog<const Commands extends string>(cog: Cog<Commands>) {
+	return cog;
+}
