@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { Client, Events, GatewayIntentBits, Partials } from "discord.js";
 import { type Context } from "../cog.ts";
 import { cogs } from "../cogs.ts";

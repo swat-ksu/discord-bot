@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { REST, Routes } from "discord.js";
 import { cogs } from "../cogs.ts";
 import { getEnv } from "../env.ts";
