@@ -3,7 +3,6 @@ import type {
 	ClientEvents,
 	RESTPostAPIChatInputApplicationCommandsJSONBody,
 } from "discord.js";
-import { SlashCommandBuilder } from "discord.js";
 import type { Env } from "./env.ts";
 
 export type Context = {
