@@ -1,7 +1,7 @@
 import { SlashCommandBuilder } from "discord.js";
-import { createCog } from "../cog.ts";
+import { Cog } from "../cog.ts";
 
-export default createCog({
+export default Cog({
 	commands: {
 		ping: new SlashCommandBuilder().setName("ping").setDescription("🏓"),
 	},

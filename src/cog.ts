@@ -20,6 +20,6 @@ export type Cog<Commands extends string> = {
 	};
 };
 
-export function createCog<const Commands extends string>(cog: Cog<Commands>) {
+export function Cog<const Commands extends string>(cog: Cog<Commands>) {
 	return cog;
 }
