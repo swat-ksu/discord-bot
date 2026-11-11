@@ -1,5 +1,6 @@
 import "dotenv/config";
 import { Client, Events, GatewayIntentBits, Partials } from "discord.js";
+
 import { type Context } from "../cog.ts";
 import { cogs } from "../cogs.ts";
 import { getEnv } from "../env.ts";
@@ -25,9 +26,7 @@ for (const cog of setupCogs) {
 	}
 }
 
-const commands = new Map(
-	setupCogs.flatMap((cog) => Object.entries(cog.commands)),
-);
+const commands = new Map(setupCogs.flatMap((cog) => Object.entries(cog.commands)));
 
 client.on(Events.ClientReady, (readyClient) => {
 	console.log(`Logged in as ${readyClient.user.tag}!`);
@@ -59,4 +58,4 @@ client.on(Events.InteractionCreate, async (interaction) => {
 	}
 });
 
-client.login(env.DISCORD_TOKEN);
+await client.login(env.DISCORD_TOKEN);

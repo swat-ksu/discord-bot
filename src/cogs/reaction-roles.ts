@@ -5,6 +5,7 @@ import {
 	type PartialMessageReaction,
 	type PartialUser,
 } from "discord.js";
+
 import { Cog } from "../cog.ts";
 
 const reactionRoleMessageIds = ["1565492712612958400"];

@@ -1,4 +1,5 @@
 import { SlashCommandBuilder } from "discord.js";
+
 import { Cog } from "../cog.ts";
 
 export default Cog({
@@ -8,7 +9,7 @@ export default Cog({
 	setup: () => ({
 		commands: {
 			ping: async (interaction) => {
-				interaction.reply("pong");
+				await interaction.reply("pong");
 			},
 		},
 		events: {},
