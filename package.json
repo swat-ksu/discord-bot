@@ -5,18 +5,23 @@
 	"scripts": {
 		"main": "node src/bin/main.ts",
 		"register": "node src/bin/register.ts",
-		"format": "prettier . --write",
-		"format:check": "prettier . --check"
-	},
-	"devDependencies": {
-		"@ianvs/prettier-plugin-sort-imports": "^4.7.1",
-		"@tsconfig/node-ts": "^23.6.4",
-		"@tsconfig/node26": "^26.0.1",
-		"@types/node": "^26.6.6",
-		"prettier": "^3.9.10"
+		"typecheck": "tsc --noEmit",
+		"lint": "oxlint",
+		"lint:fix": "oxlint --fix",
+		"format": "oxfmt",
+		"format:check": "oxfmt --check"
 	},
 	"dependencies": {
 		"discord.js": "^14.27.0",
 		"dotenv": "^18.0.10"
+	},
+	"devDependencies": {
+		"@tsconfig/node-ts": "^23.6.4",
+		"@tsconfig/node26": "^26.0.1",
+		"@types/node": "^26.6.6",
+		"oxfmt": "^0.78.0",
+		"oxlint": "^1.93.0",
+		"oxlint-tsgolint": "^7.0.2006",
+		"typescript": "^7.0.2"
 	}
 }
