@@ -3,6 +3,8 @@
 
 # Environment variables
 .env
+.env.dev
+.env.prod
 
 # OS stuff
 .DS_Store

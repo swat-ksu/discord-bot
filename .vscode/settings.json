@@ -8,6 +8,7 @@
 
 	"[typescript]": { "editor.defaultFormatter": "oxc.oxc-vscode" },
 	"[dockercompose]": { "editor.defaultFormatter": "oxc.oxc-vscode" },
+	"[typst]": { "editor.defaultFormatter": "myriad-dreamin.tinymist" },
 	"[json]": { "editor.defaultFormatter": "oxc.oxc-vscode" },
 	"[jsonc]": { "editor.defaultFormatter": "oxc.oxc-vscode" },
 	"[yaml]": { "editor.defaultFormatter": "oxc.oxc-vscode" }
