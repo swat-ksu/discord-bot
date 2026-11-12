@@ -13,7 +13,8 @@
 	},
 	"dependencies": {
 		"discord.js": "^14.28.1",
-		"dotenv": "^18.0.10"
+		"dotenv": "^18.0.10",
+		"octokit": "^5.0.5"
 	},
 	"devDependencies": {
 		"@tsconfig/node-ts": "^23.6.4",
