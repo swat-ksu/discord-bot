@@ -1,22 +1,31 @@
 import type {
 	ChatInputCommandInteraction,
 	ClientEvents,
-	SlashCommandBuilder,
+	RESTPostAPIChatInputApplicationCommandsJSONBody,
 } from "discord.js";
-import ping from "./cogs/ping.ts";
-import reactionRoles from "./cogs/reaction-roles.ts";
 
-export interface Cog {
-	name: string;
-	commands: Command[];
-	events: {
-		[Event in keyof ClientEvents]?: (...args: ClientEvents[Event]) => void;
-	};
-}
+import type { Env } from "./env.ts";
 
-export type Command = {
-	data: SlashCommandBuilder;
-	execute: (interaction: ChatInputCommandInteraction) => Promise<void>;
+export type Context = {
+	env: Env;
 };
 
-export const cogs: Cog[] = [ping, reactionRoles];
+export type Cog<Commands extends string> = {
+	commands: Record<Commands, SlashCommand>;
+	setup: (ctx: Context) => {
+		commands: {
+			[K in Commands]: (interaction: ChatInputCommandInteraction) => Promise<void>;
+		};
+		events: {
+			[K in keyof ClientEvents]?: (...args: ClientEvents[K]) => Promise<void>;
+		};
+	};
+};
+
+export function Cog<const Commands extends string>(cog: Cog<Commands>) {
+	return cog;
+}
+
+interface SlashCommand {
+	toJSON(): RESTPostAPIChatInputApplicationCommandsJSONBody;
+}

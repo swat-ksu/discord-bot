@@ -1,8 +1,13 @@
+import "dotenv/config";
 import { Client, Events, GatewayIntentBits, Partials } from "discord.js";
-import { cogs, type Command } from "../cog.ts";
+
+import { type Context } from "../cog.ts";
+import { cogs } from "../cogs.ts";
 import { getEnv } from "../env.ts";
 
 const env = getEnv();
+
+const ctx: Context = { env };
 
 const client = new Client({
 	intents: [
@@ -13,17 +18,15 @@ const client = new Client({
 	partials: [Partials.Message, Partials.Channel, Partials.Reaction],
 });
 
-for (const cog of cogs) {
+const setupCogs = cogs.map((cog) => cog.setup(ctx));
+
+for (const cog of setupCogs) {
 	for (const [event, listener] of Object.entries(cog.events)) {
 		client.on(event, listener);
 	}
 }
 
-const commands: Map<Command["data"]["name"], Command["execute"]> = new Map(
-	cogs.flatMap((cog) =>
-		cog.commands.map((command) => [command.data.name, command.execute]),
-	),
-);
+const commands = new Map(setupCogs.flatMap((cog) => Object.entries(cog.commands)));
 
 client.on(Events.ClientReady, (readyClient) => {
 	console.log(`Logged in as ${readyClient.user.tag}!`);
@@ -47,12 +50,16 @@ client.on(Events.InteractionCreate, async (interaction) => {
 		const content =
 			"There was an error while executing this command, more information has been logged.";
 
-		if (interaction.replied || interaction.deferred) {
-			await interaction.followUp({ content });
-		} else {
-			await interaction.reply({ content });
+		try {
+			if (interaction.replied || interaction.deferred) {
+				await interaction.followUp({ content });
+			} else {
+				await interaction.reply({ content });
+			}
+		} catch (error) {
+			console.error(error);
 		}
 	}
 });
 
-client.login(env.DISCORD_TOKEN);
+await client.login(env.DISCORD_TOKEN);

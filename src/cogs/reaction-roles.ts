@@ -5,9 +5,8 @@ import {
 	type PartialMessageReaction,
 	type PartialUser,
 } from "discord.js";
-import type { Cog } from "../cog.ts";
 
-const name = "reaction-roles";
+import { Cog } from "../cog.ts";
 
 const reactionRoleMessageIds = ["1565492712612958400"];
 
@@ -55,11 +54,13 @@ async function onMessageReactionRemove(
 	await member.roles.remove(roleId);
 }
 
-export default {
-	name,
-	commands: [],
-	events: {
-		[Events.MessageReactionAdd]: onMessageReactionAdd,
-		[Events.MessageReactionRemove]: onMessageReactionRemove,
-	},
-} satisfies Cog;
+export default Cog({
+	commands: {},
+	setup: () => ({
+		commands: {},
+		events: {
+			[Events.MessageReactionAdd]: onMessageReactionAdd,
+			[Events.MessageReactionRemove]: onMessageReactionRemove,
+		},
+	}),
+});

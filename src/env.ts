@@ -1,4 +1,4 @@
-type Env = {
+export type Env = {
 	DISCORD_CLIENT_ID: string;
 	DISCORD_TOKEN: string;
 	DISCORD_GUILD: string;

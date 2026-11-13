@@ -1,18 +1,17 @@
-import { ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
-import type { Cog } from "../cog.ts";
+import { SlashCommandBuilder } from "discord.js";
 
-const name = "ping";
+import { Cog } from "../cog.ts";
 
-const pingCommandData = new SlashCommandBuilder()
-	.setName("ping")
-	.setDescription("🏓");
-
-async function pingCommandExecute(interaction: ChatInputCommandInteraction) {
-	await interaction.reply("pong");
-}
-
-export default {
-	name,
-	commands: [{ data: pingCommandData, execute: pingCommandExecute }],
-	events: {},
-} satisfies Cog;
+export default Cog({
+	commands: {
+		ping: new SlashCommandBuilder().setName("ping").setDescription("🏓"),
+	},
+	setup: () => ({
+		commands: {
+			ping: async (interaction) => {
+				await interaction.reply("pong");
+			},
+		},
+		events: {},
+	}),
+});

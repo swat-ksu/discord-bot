@@ -1,5 +1,7 @@
+import "dotenv/config";
 import { REST, Routes } from "discord.js";
-import { cogs } from "../cog.ts";
+
+import { cogs } from "../cogs.ts";
 import { getEnv } from "../env.ts";
 
 const env = getEnv();
@@ -10,13 +12,12 @@ try {
 	console.log("Started refreshing application (/) commands.");
 
 	const commandData = cogs.flatMap((cog) =>
-		cog.commands.map((command) => command.data.toJSON()),
+		Object.values(cog.commands).map((command) => command.toJSON()),
 	);
 
-	await rest.put(
-		Routes.applicationGuildCommands(env.DISCORD_CLIENT_ID, env.DISCORD_GUILD),
-		{ body: commandData },
-	);
+	await rest.put(Routes.applicationGuildCommands(env.DISCORD_CLIENT_ID, env.DISCORD_GUILD), {
+		body: commandData,
+	});
 
 	console.log("Successfully reloaded application (/) commands.");
 } catch (error) {
